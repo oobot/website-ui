@@ -1,5 +1,6 @@
 <header class="header">
   <nav class="navbar">
+
     <div class="navbar-brand">
       <a class="navbar-item" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
       {{#if env.SITE_SEARCH_PROVIDER}}
@@ -9,15 +10,28 @@
         </div>
       </div>
       {{/if}}
+
+      <!-- 小屏幕折叠汉堡菜单-->
       <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
         <span></span>
         <span></span>
         <span></span>
       </button>
+
     </div>
+
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
+
+      {{#each site.components}}
+        <div class="navbar-item{{#if (eq this @root.page.component)}} is-current{{/if}}">
+          <a class="navbar-item" href="{{{relativize ./url}}}">{{{./title}}}</a>
+        </div>
+      {{/each}}
+
+<!--
         <a class="navbar-item" href="#">Home</a>
+
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="#">Products</a>
           <div class="navbar-dropdown">
@@ -26,6 +40,7 @@
             <a class="navbar-item" href="#">Product C</a>
           </div>
         </div>
+
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="#">Services</a>
           <div class="navbar-dropdown">
@@ -34,12 +49,16 @@
             <a class="navbar-item" href="#">Service C</a>
           </div>
         </div>
+
         <div class="navbar-item">
           <span class="control">
             <a class="button is-primary" href="#">Download</a>
           </span>
         </div>
+-->
+
       </div>
     </div>
+
   </nav>
 </header>

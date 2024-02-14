@@ -36,9 +36,9 @@
   --scrollbar-thumb-color: var(--color-gray-10);
   --scrollbar_hover-thumb-color: var(--color-gray-30);
   /* navbar */
-  --navbar-background: var(--color-jet-80);
-  --navbar-font-color: var(--color-white);
-  --navbar_hover-background: var(--color-black);
+  --navbar-background: var(--color-white);
+  --navbar-font-color: var(--color-black);
+  --navbar_hover-background: var(--color-smoke-50);
   --navbar-button-background: var(--color-white);
   --navbar-button-border-color: var(--panel-border-color);
   --navbar-button-font-color: var(--body-font-color);
@@ -132,7 +132,7 @@
   --nav-panel-menu-height: calc(100% - var(--drawer-height));
   --nav-panel-explore-height: calc(50% + var(--drawer-height));
   --nav-width: calc(270 / var(--rem-base) * 1rem);
-  --toc-top: calc(var(--body-top) + var(--toolbar-height));
+  --toc-top: calc(var(--body-top));
   --toc-height: calc(100vh - var(--toc-top) - 2.5rem);
   --toc-width: calc(162 / var(--rem-base) * 1rem);
   --toc-width--widescreen: calc(216 / var(--rem-base) * 1rem);
