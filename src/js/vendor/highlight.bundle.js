@@ -1,12 +1,13 @@
 ;(function () {
   'use strict'
 
-  var hljs = require('highlight.js/lib/highlight')
+  var hljs = require('highlight.js/lib/core')
   hljs.registerLanguage('asciidoc', require('highlight.js/lib/languages/asciidoc'))
   hljs.registerLanguage('bash', require('highlight.js/lib/languages/bash'))
   hljs.registerLanguage('clojure', require('highlight.js/lib/languages/clojure'))
+  hljs.registerLanguage('c', require('highlight.js/lib/languages/c'))
   hljs.registerLanguage('cpp', require('highlight.js/lib/languages/cpp'))
-  hljs.registerLanguage('cs', require('highlight.js/lib/languages/cs'))
+  // hljs.registerLanguage('cs', require('highlight.js/lib/languages/cs'))
   hljs.registerLanguage('css', require('highlight.js/lib/languages/css'))
   hljs.registerLanguage('diff', require('highlight.js/lib/languages/diff'))
   hljs.registerLanguage('dockerfile', require('highlight.js/lib/languages/dockerfile'))
@@ -32,6 +33,7 @@
   hljs.registerLanguage('ruby', require('highlight.js/lib/languages/ruby'))
   hljs.registerLanguage('rust', require('highlight.js/lib/languages/rust'))
   hljs.registerLanguage('scala', require('highlight.js/lib/languages/scala'))
+  hljs.registerLanguage('scss', require('highlight.js/lib/languages/scss'))
   hljs.registerLanguage('shell', require('highlight.js/lib/languages/shell'))
   hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'))
   hljs.registerLanguage('swift', require('highlight.js/lib/languages/swift'))

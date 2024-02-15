@@ -201,12 +201,6 @@ body {
   }
 }
 
-/*@media screen and (max-width: 1023.5px) {
-  html.is-clipped--navbar {
-    overflow-y: hidden;
-  }
-}*/
-
 @media screen and (max-width: 1023.5px) {
   html.is-clipped--navbar {
     overflow-y: hidden;
@@ -252,14 +246,6 @@ body {
     display: flex;
     background: #e18114;
   }
-
-  /*.navbar-end {*/
-  /*  background: #e18114;*/
-  /*}*/
-
-  /*#topbar-nav {*/
-  /*  background: #e18114;*/
-  /*}*/
 
   .navbar-item,
   .navbar-link {

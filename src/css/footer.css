@@ -1,13 +1,19 @@
 footer.footer {
-  background-color: var(--footer-background);
+  border-top: 1px solid var(--toolbar-border-color);
   color: var(--footer-font-color);
-  font-size: calc(15 / var(--rem-base) * 1rem);
-  line-height: var(--footer-line-height);
-  padding: 1.5rem;
+  font-size: calc(14 / var(--rem-base) * 1rem);
+  margin: 2rem 1rem 0 1rem;
+  /* padding: 0 1.5rem; */
+}
+
+@media screen and (min-width: 1024px) {
+  footer.footer {
+    max-width: calc(var(--doc-max-width--desktop) - 2rem);
+  }
 }
 
 .footer p {
-  margin: 0.5rem 0;
+  /* margin: 0.5rem 0; */
 }
 
 .footer a {
