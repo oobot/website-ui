@@ -13,6 +13,7 @@
   "browserslist": [
     "last 2 versions"
   ],
+  "type": "commonjs",
   "devDependencies": {
     "@asciidoctor/core": "~2.2",
     "@asciidoctor/tabs": "^1.0.0-beta.6",

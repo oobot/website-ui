@@ -108,3 +108,7 @@
 .toc.embedded {
   display: none !important;
 }
+
+.doc #toc {
+  display: none !important;
+}

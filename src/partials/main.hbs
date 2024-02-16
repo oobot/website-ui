@@ -1,16 +1,14 @@
 <main class="article">
   <div class="content">
-{{#if (eq page.layout '404')}}
-{{> article-404}}
-{{else}}
-{{> toc}}
-
-<div class="content-doc">
-  {{> toolbar}}
-  {{> article}}
-  {{> footer}}
-</div>
-
-{{/if}}
+    {{> toc}}
+    <div class="doc-container">
+      {{#if (eq page.layout '404')}}
+        {{> article-404}}
+      {{else}}
+        {{> toolbar}}
+        {{> article}}
+      {{/if}}
+      {{> footer}}
+    </div>
   </div>
 </main>
