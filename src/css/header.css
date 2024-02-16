@@ -6,6 +6,7 @@ body {
   background: var(--navbar-background);
   color: var(--navbar-font-color);
   font-size: calc(16 / var(--rem-base) * 1rem);
+  /* font-weight: bold; */
   height: var(--navbar-height);
   position: fixed;
   top: 0;
@@ -27,6 +28,16 @@ body {
 
 .navbar-brand .navbar-item {
   color: var(--navbar-font-color);
+  font-weight: bold;
+}
+
+.navbar .navbar-menu .navbar-item {
+  color: var(--color-jet-30);
+  font-weight: bold;
+}
+
+.navbar .navbar-menu .is-current > a {
+  color: var(--important-color);
 }
 
 .navbar-brand .navbar-item:first-child {
@@ -244,7 +255,7 @@ body {
   .navbar-menu,
   .navbar-end {
     display: flex;
-    background: #e18114;
+    /* background: #e18114; */
   }
 
   .navbar-item,
