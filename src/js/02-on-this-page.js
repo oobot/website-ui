@@ -3,61 +3,84 @@
 
   setupToc()
   listenNav()
+  listenHeader()
+
+  function listenHeader () {
+    preventAnchorClick('#topbar-nav a.navbar-item', async (element, ev) => {
+      const link = ev.currentTarget
+      const href = link.href
+      const html = await fetchHtml(href)
+      if (html === null) return
+
+      document.querySelector('#topbar-nav .is-current').classList.remove('is-current')
+      element.parentElement.classList.add('is-current')
+
+      document.querySelector('body>div.body').outerHTML = html.querySelector('body>div.body').outerHTML
+
+      // 修改 URL
+      document.title = html.title
+      window.history.pushState({ u: href, t: document.title }, document.title, href)
+      setupToc()
+    })
+  }
 
   function listenNav () {
-    const a = document.querySelectorAll('aside.nav a.nav-link')
+    preventAnchorClick('aside.nav a.nav-link', async (element, ev) => {
+      const link = ev.currentTarget
+      const href = link.href
+      const html = await fetchHtml(href)
+      if (html === null) return
+
+      // 移除现有的 class value
+      document.querySelectorAll('aside.nav li.is-active').forEach((e) => {
+        e.classList.remove('is-current-path', 'is-current-page', 'is-active')
+      })
+
+      // 添加 class value
+      let e = element
+      let depth = 999
+      while (depth >= 0) {
+        e = e.parentElement
+        if (!e.classList.contains('nav-item')) {
+          continue
+        }
+
+        if (depth === 999) {
+          e.classList.add('is-current-page', 'is-active')
+        } else {
+          e.classList.add('is-current-path', 'is-active')
+        }
+        depth = +e.attributes.getNamedItem('data-depth').value - 1
+      }
+
+      // 替换文章区域
+      document.querySelector('main.article .doc-container').outerHTML = html
+        .querySelector('main.article .doc-container').outerHTML
+
+      // 替换TOC
+      const toc = html.querySelector('main.article aside.toc').outerHTML
+      const oldToc = document.querySelector('main.article aside.toc')
+      if (oldToc) {
+        oldToc.outerHTML = toc
+      } else {
+        document.querySelector('main.article>.content').insertAdjacentHTML('afterbegin', toc)
+      }
+      setupToc()
+
+      // 修改 URL
+      document.title = html.title
+      window.history.pushState({ u: href, t: document.title }, document.title, href)
+    })
+  }
+
+  function preventAnchorClick (selector, callback) {
+    const a = document.querySelectorAll(selector)
     a.forEach(async (element) => {
       element.addEventListener('click', async (ev) => {
         const link = ev.currentTarget
-        const href = link.href
-        if (document.location.protocol !== link.protocol || document.location.hostname !== link.hostname) {
-          return
-        }
+        if (document.location.protocol !== link.protocol || document.location.hostname !== link.hostname) return
         ev.preventDefault()
-
-        const html = await fetchHtml(href)
-        if (html === null) {
-          return
-        }
-
-        // 修改 URL
-        document.title = html.title
-        window.history.pushState({ u: href, t: document.title }, document.title, href)
-
-        // 移除现有的 class value
-        document.querySelectorAll('aside.nav li.is-active').forEach((e) => {
-          e.classList.remove('is-current-path', 'is-current-page', 'is-active')
-        })
-        // 添加 class value
-        let e = element
-        let depth = 999
-        while (depth >= 0) {
-          e = e.parentElement
-          if (!e.classList.contains('nav-item')) {
-            continue
-          }
-
-          if (depth === 999) {
-            e.classList.add('is-current-page', 'is-active')
-          } else {
-            e.classList.add('is-current-path', 'is-active')
-          }
-          depth = +e.attributes.getNamedItem('data-depth').value - 1
-        }
-
-        // 替换文章区域
-        document.querySelector('main.article .doc-container').outerHTML = html
-          .querySelector('main.article .doc-container').outerHTML
-
-        // 替换TOC
-        const toc = html.querySelector('main.article aside.toc').outerHTML
-        const oldToc = document.querySelector('main.article aside.toc')
-        if (oldToc) {
-          oldToc.outerHTML = toc
-        } else {
-          document.querySelector('main.article>.content').insertAdjacentHTML('afterbegin', toc)
-        }
-        setupToc()
+        callback(element, ev)
       })
     })
   }
@@ -68,20 +91,16 @@
   }
 
   function setupToc () {
-    console.log('setup toc')
     var sidebar = document.querySelector('aside.toc.sidebar')
     if (!sidebar) return
 
-    console.log(1)
     if (document.querySelector('body.-toc')) return sidebar.parentNode.removeChild(sidebar)
     var levels = parseInt(sidebar.dataset.levels || 2, 10)
     if (levels < 0) return
-    console.log(2)
 
     var articleSelector = 'article.doc'
     var article = document.querySelector(articleSelector)
     if (!article) return
-    console.log(3)
 
     var headingsSelector = []
     for (var level = 0; level <= levels; level++) {
@@ -96,7 +115,6 @@
     }
     var headings = find(headingsSelector.join(','), article.parentNode)
     if (!headings.length) return sidebar.parentNode.removeChild(sidebar)
-    console.log(4)
 
     var lastActiveFragment
     var links = {}

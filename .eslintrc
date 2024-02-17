@@ -1,4 +1,17 @@
 {
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6,
+    "allowImportExportEverywhere": true,
+    "ecmaFeatures": {
+      "modules": true,
+      "jsx": true
+    }
+  },
+  "env": {
+    //    "es2020": true
+  },
   "extends": "standard",
   "rules": {
     "arrow-parens": ["error", "always"],
