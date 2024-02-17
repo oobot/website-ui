@@ -1,35 +1,51 @@
 ;(function () {
   'use strict'
 
+  setupToc()
   listenNav()
 
   function listenNav () {
     const a = document.querySelectorAll('aside.nav a.nav-link')
-    const tokens = ['is-current-page', 'is-active']
-    let lastElement
-    // document.querySelector('')
     a.forEach(async (element) => {
       element.addEventListener('click', async (ev) => {
         const link = ev.currentTarget
+        const href = link.href
         if (document.location.protocol !== link.protocol || document.location.hostname !== link.hostname) {
           return
         }
         ev.preventDefault()
 
-        const html = await fetchHtml(link.href)
+        const html = await fetchHtml(href)
         if (html === null) {
           return
         }
 
-        // 左侧菜单高亮
-        if (lastElement) {
-          lastElement.classList.remove(tokens)
-        }
-        const parent = element.parentElement
-        parent.classList.add(tokens)
-        lastElement = parent
+        // 修改 URL
+        document.title = html.title
+        window.history.pushState({ u: href, t: document.title }, document.title, href)
 
-        // document.querySelector('aside.nav').outerHTML = html.querySelector('aside.nav').outerHTML
+        // 移除现有的 class value
+        document.querySelectorAll('aside.nav li.is-active').forEach((e) => {
+          e.classList.remove('is-current-path', 'is-current-page', 'is-active')
+        })
+        // 添加 class value
+        let e = element
+        let depth = 999
+        while (depth >= 0) {
+          e = e.parentElement
+          if (!e.classList.contains('nav-item')) {
+            continue
+          }
+
+          if (depth === 999) {
+            e.classList.add('is-current-page', 'is-active')
+          } else {
+            e.classList.add('is-current-path', 'is-active')
+          }
+          depth = +e.attributes.getNamedItem('data-depth').value - 1
+        }
+
+        // 替换文章区域
         document.querySelector('main.article .doc-container').outerHTML = html
           .querySelector('main.article .doc-container').outerHTML
 
@@ -42,7 +58,6 @@
           document.querySelector('main.article>.content').insertAdjacentHTML('afterbegin', toc)
         }
         setupToc()
-        // TODO pushState
       })
     })
   }

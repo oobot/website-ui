@@ -24,7 +24,7 @@
       <div class="navbar-end">
       {{#each (componentSorter site.components page.attributes.component-sort-order)}}
         <div class="navbar-item{{#if (eq this @root.page.component)}} is-current{{/if}}">
-          <a class="navbar-item" href="{{{relativize ./url}}}">{{{./title}}}</a>
+          <a class="navbar-item" href="{{{./url}}}">{{{./title}}}</a>
         </div>
       {{/each}}
       </div>
