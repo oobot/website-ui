@@ -21,6 +21,7 @@
       document.title = html.title
       window.history.pushState({ u: href, t: document.title }, document.title, href)
       setupToc()
+      loadScript()
     })
   }
 
@@ -66,6 +67,7 @@
         document.querySelector('main.article>.content').insertAdjacentHTML('afterbegin', toc)
       }
       setupToc()
+      loadScript()
 
       // 修改 URL
       document.title = html.title
@@ -88,6 +90,16 @@
   async function fetchHtml (href) {
     const response = await window.fetch(href)
     return response.ok ? new window.DOMParser().parseFromString(await response.text(), 'text/html') : null
+  }
+
+  function loadScript () {
+    const scriptEle = document.createElement('script')
+    scriptEle.id = 'highlight-script'
+    scriptEle.async = true
+    scriptEle.src = '/assets/js/vendor/highlight.js'
+
+    document.getElementById('highlight-script').remove()
+    document.body.appendChild(scriptEle)
   }
 
   function setupToc () {
