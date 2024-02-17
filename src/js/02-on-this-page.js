@@ -68,15 +68,21 @@
   }
 
   function setupToc () {
+    console.log('setup toc')
     var sidebar = document.querySelector('aside.toc.sidebar')
     if (!sidebar) return
+
+    console.log(1)
     if (document.querySelector('body.-toc')) return sidebar.parentNode.removeChild(sidebar)
     var levels = parseInt(sidebar.dataset.levels || 2, 10)
     if (levels < 0) return
+    console.log(2)
 
     var articleSelector = 'article.doc'
     var article = document.querySelector(articleSelector)
     if (!article) return
+    console.log(3)
+
     var headingsSelector = []
     for (var level = 0; level <= levels; level++) {
       var headingSelector = [articleSelector]
@@ -90,6 +96,7 @@
     }
     var headings = find(headingsSelector.join(','), article.parentNode)
     if (!headings.length) return sidebar.parentNode.removeChild(sidebar)
+    console.log(4)
 
     var lastActiveFragment
     var links = {}
@@ -120,10 +127,15 @@
       startOfContent.parentNode.insertBefore(embeddedToc, startOfContent)
     }
 
-    window.addEventListener('load', function () {
+    // 加载页面后自动调用
+    window.addEventListener('load', () => listenTocScroll())
+    // 替换页面后需要调用一次, 加载页面后不需要调用
+    listenTocScroll()
+
+    function listenTocScroll () {
       onScroll()
       window.addEventListener('scroll', onScroll)
-    })
+    }
 
     function onScroll () {
       var scrolledBy = window.pageYOffset
